@@ -13,11 +13,8 @@ export default function Navigation() {
           <Link className="nav-link" to="/">
             Home
           </Link>
-          <Link className="nav-link" to="/sign-up">
-            Sign Up
-          </Link>
-          <Link className="nav-link" to="/sign-in">
-            Sign-In
+          <Link className="nav-link" to="/auth">
+            Sign In
           </Link>
         </div>
       </div>
