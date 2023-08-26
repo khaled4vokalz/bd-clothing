@@ -24,7 +24,7 @@ export default function SignUpForm() {
     }
     try {
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
-      const userDocRef = await createUserDocumentFromAuth({ ...user, displayName });
+      await createUserDocumentFromAuth({ ...user, displayName });
       setFormFields(defaultFormFields);
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -40,14 +40,14 @@ export default function SignUpForm() {
     setFormFields({ ...formFields, [name]: value })
   }
   return (
-  <div className="sign-up-container">
+    <div className="sign-up-container">
       <h2>Don't have an account?</h2>
-    <span>Sign up with your email and password</span>
-<form onSubmit={handleSubmit}>
-        <FormInput label="Display Name" required onChange={handleChange} name="displayName" value={displayName}/>
-        <FormInput label="Email" type="email" required onChange={handleChange} name="email" value={email}/>
-        <FormInput label="Password" type="password" required onChange={handleChange} name="password" value={password}/>
-        <FormInput label="Confirm Password" type="password" required onChange={handleChange} name="confirmPassword" value={confirmPassword}/>
+      <span>Sign up with your email and password</span>
+      <form onSubmit={handleSubmit}>
+        <FormInput label="Display Name" required onChange={handleChange} name="displayName" value={displayName} />
+        <FormInput label="Email" type="email" required onChange={handleChange} name="email" value={email} />
+        <FormInput label="Password" type="password" required onChange={handleChange} name="password" value={password} />
+        <FormInput label="Confirm Password" type="password" required onChange={handleChange} name="confirmPassword" value={confirmPassword} />
         <Button type="submit">Sign Up</Button>
       </form>
     </div>
