@@ -8,11 +8,11 @@ export default function CartIcon() {
   const { isCartOpen, setIsCartOpen, cartItemCount } = useContext(CartContext);
   const toggleIsCartOpen = () => {
     setIsCartOpen(!isCartOpen);
-  }
+  };
   return (
     <div className="cart-icon-container" onClick={toggleIsCartOpen}>
-      <ShoppingIcon className='shopping-icon'></ShoppingIcon>
+      <ShoppingIcon className="shopping-icon"></ShoppingIcon>
       <span className="item-count">{cartItemCount}</span>
     </div>
-  )
+  );
 }

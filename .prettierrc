@@ -1,0 +1,7 @@
+{
+  "htmlWhitespaceSensitivity": "strict",
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "endOfLine": "lf",
+  "arrowParens": "avoid"
+}

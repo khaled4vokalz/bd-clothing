@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 import SHOP_DATA from '../shop-data.json';
 
 // as the actual value we need to access
@@ -10,5 +10,9 @@ export const ProductsContext = createContext({
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState(SHOP_DATA);
   const value = { products, setProducts };
-  return <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>
-}
+  return (
+    <ProductsContext.Provider value={value}>
+      {children}
+    </ProductsContext.Provider>
+  );
+};

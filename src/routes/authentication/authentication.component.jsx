@@ -5,9 +5,9 @@ import './authentication.styles.scss';
 
 export default function Authentication() {
   return (
-  <div className='authentication-container'>
+    <div className="authentication-container">
       <SignInForm />
       <SignUpForm />
     </div>
-  )
+  );
 }
