@@ -2,7 +2,7 @@ import './category-item.styles.scss';
 
 export default function CategoryItem({ category: { imageUrl, title } }) {
   return (
-    <div className="category-container">
+    <div className="category-item-container">
       <div
         className="background-image"
         style={{
