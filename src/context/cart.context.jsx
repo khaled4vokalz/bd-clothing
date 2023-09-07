@@ -1,4 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import { cartReducer, CART_ACTION_TYPES } from '../reducers/cart-reducer';
+import { createAction } from '../utils/reducer/reducer.util';
 
 const addCartItem = (cartItems, itemToAdd) => {
   const newCartItems = [...cartItems];
@@ -56,23 +58,36 @@ export const CartContext = createContext({
   cartItemTotal: 0,
 });
 
-export const CartProvier = ({ children }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartItemCount, setCartItemCount] = useState(0);
-  const [cartItemTotal, setCartItemTotal] = useState(0);
+const INTIAL_CART_STATE = {
+  cartItems: [],
+  isCartOpen: false,
+  cartItemCount: 0,
+  cartItemTotal: 0,
+};
 
-  useEffect(() => {
-    const newCartItemCountAndPrice = cartItems.reduce(
+export const CartProvier = ({ children }) => {
+  const [{ cartItems, cartItemCount, cartItemTotal, isCartOpen }, dispatch] =
+    useReducer(cartReducer, INTIAL_CART_STATE);
+
+  const calculateCartItemCountAndTotal = items =>
+    items.reduce(
       ({ count, total }, cartItem) => ({
         count: count + cartItem.quantity,
         total: (count + cartItem.quantity) * cartItem.price,
       }),
       { count: 0, total: 0 }
     );
-    setCartItemCount(newCartItemCountAndPrice.count);
-    setCartItemTotal(newCartItemCountAndPrice.total);
-  }, [cartItems]);
+
+  const setCartItems = newCartItems => {
+    const newCountAndTotal = calculateCartItemCountAndTotal(newCartItems);
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
+        cartItems: newCartItems,
+        cartItemCount: newCountAndTotal.count,
+        cartItemTotal: newCountAndTotal.total,
+      })
+    );
+  };
 
   const addItemToCart = itemToAdd => {
     setCartItems(addCartItem(cartItems, itemToAdd));
@@ -85,6 +100,11 @@ export const CartProvier = ({ children }) => {
   const clearItemFromCart = itemToClear => {
     setCartItems(clearCartItem(cartItems, itemToClear));
   };
+
+  const setIsCartOpen = value => {
+    dispatch(createAction(CART_ACTION_TYPES.TOGGLE_IS_CART_OPEN, value));
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
