@@ -13,7 +13,7 @@ export default function CategoryItem({ category: { imageUrl, title, route } }) {
   };
   return (
     <CategoryItemContainer onClick={onClickHandler}>
-      <BackgroundImage imageUrl={imageUrl} />
+      <BackgroundImage imageurl={imageUrl} />
       <CategoryBodyContainer>
         <h2> {title}</h2>
         <p>Shop Now</p>
