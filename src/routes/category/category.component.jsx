@@ -4,14 +4,15 @@ import ProductCard from '../../components/product-card/product-card.component';
 import { CategoryContainer, CategoryTitle } from './category.styles';
 import { useSelector } from 'react-redux';
 import {
+  selectCategoriesIsLoading,
   selectCategoriesMap,
-  hasCategories,
 } from '../../store/categories/categories.selector';
+import Spinner from '../../components/spinner/spinner.component';
 
 export default function Category() {
   const { category } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
-  const categoriesExits = useSelector(hasCategories);
+  const isLoading = useSelector(selectCategoriesIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);
   useEffect(() => {
     setProducts(categoriesMap[category]);
@@ -19,7 +20,7 @@ export default function Category() {
   return (
     <>
       <CategoryTitle>{category}</CategoryTitle>
-      {categoriesExits ? (
+      {!isLoading ? (
         <CategoryContainer>
           {products &&
             products.map(product => (
@@ -27,7 +28,7 @@ export default function Category() {
             ))}
         </CategoryContainer>
       ) : (
-        <span>fetching data...</span>
+        <Spinner />
       )}
     </>
   );

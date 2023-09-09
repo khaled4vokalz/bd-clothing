@@ -4,6 +4,7 @@ import { rootReducer } from './root.reducer';
 import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
+import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
@@ -13,7 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = [logger];
+const middlewares = [logger, thunk];
 
 const composedEnhancer = compose(applyMiddleware(...middlewares));
 
