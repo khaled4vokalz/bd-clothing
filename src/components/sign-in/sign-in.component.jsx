@@ -7,6 +7,7 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.utils';
 import { ButtonsContainer, SignInContainer } from './sign-in.styles';
+import { useNavigate } from 'react-router-dom';
 
 const defaultFormFields = {
   email: '',
@@ -16,6 +17,7 @@ const defaultFormFields = {
 export default function SignInForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
     await signInWithGooglePopup();
@@ -27,6 +29,7 @@ export default function SignInForm() {
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
       setFormFields(defaultFormFields);
+      navigate('/');
     } catch (error) {
       if (
         error.code === 'auth/wrong-password' ||

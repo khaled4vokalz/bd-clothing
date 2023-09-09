@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 import {
   NavigationContainer,
@@ -17,9 +17,11 @@ import { selectCurrentUser } from '../../store/user/user.selector';
 export default function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const signOutHandler = async () => {
     await signOutUser();
+    navigate('auth');
   };
 
   return (
