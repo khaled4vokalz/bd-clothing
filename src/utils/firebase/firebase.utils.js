@@ -29,7 +29,7 @@ const firebaseConfig = {
   appId: '1:293209788719:web:1c98b9f0d0e47b04f391da',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -56,20 +56,12 @@ export const addCollectionAndDocuments = async (
     batch.set(docRef, object);
   });
   await batch.commit();
-  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
-  const q = query(collectionRef);
-
-  const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-  return categoryMap;
+  const querySnapshot = await getDocs(query(collectionRef));
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 };
 
 export const createUserDocumentFromAuth = async userAuth => {

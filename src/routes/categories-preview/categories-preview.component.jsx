@@ -1,12 +1,16 @@
 import CategoryPreview from '../../components/category-preview/category-preview.component';
 import { useSelector } from 'react-redux';
-import { selectCategoriesMap } from '../../store/categories/categories.selector';
+import {
+  hasCategories,
+  selectCategoriesMap,
+} from '../../store/categories/categories.selector';
 
 export default function CategoriesPreview() {
   const categoriesMap = useSelector(selectCategoriesMap);
+  const categoriesExits = useSelector(hasCategories);
   return (
     <>
-      {Object.keys(categoriesMap).length ? (
+      {categoriesExits ? (
         Object.keys(categoriesMap).map(title => (
           <CategoryPreview
             key={title}
