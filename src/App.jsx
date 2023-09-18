@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 
 export default function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
+                      useEffect(() => {
     const unsubscribe = onAutheStateChangedListener(async user => {
       if (user) {
         await createUserDocumentFromAuth(user);
