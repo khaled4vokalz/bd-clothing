@@ -64,7 +64,10 @@ export const getCategoriesAndDocuments = async () => {
   return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 };
 
-export const createUserDocumentFromAuth = async userAuth => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalDetails = {}
+) => {
   if (!userAuth) {
     return;
   }
@@ -76,7 +79,12 @@ export const createUserDocumentFromAuth = async userAuth => {
     const createdAt = new Date();
 
     try {
-      await setDoc(userDocRef, { displayName, email, createdAt });
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalDetails,
+      });
     } catch (error) {
       console.error('error creating the user', error.message);
     }
