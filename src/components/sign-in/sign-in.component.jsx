@@ -2,11 +2,13 @@ import { useState } from 'react';
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-import { signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
 import { ButtonsContainer, SignInContainer } from './sign-in.styles';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { googleSignInStart } from '../../store/user/user.action';
+import {
+  emailSignInStart,
+  googleSignInStart,
+} from '../../store/user/user.action';
 
 const defaultFormFields = {
   email: '',
@@ -27,7 +29,7 @@ export default function SignInForm() {
     event.preventDefault();
 
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email, password));
       setFormFields(defaultFormFields);
       navigate('/');
     } catch (error) {
