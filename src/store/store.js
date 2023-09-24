@@ -1,22 +1,14 @@
-import { compose, createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { logger } from 'redux-logger';
 import { rootReducer } from './root.reducer';
-import storage from 'redux-persist/lib/storage';
-import persistReducer from 'redux-persist/es/persistReducer';
-import persistStore from 'redux-persist/es/persistStore';
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['user'],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [logger];
-
-const composedEnhancer = compose(applyMiddleware(...middlewares));
-
-export const store = createStore(persistedReducer, composedEnhancer);
-
-export const persistor = persistStore(store);
+export const store = configureStore({
+  reducer: rootReducer,
+  // the default middlewares consist of redux thunk as well
+  // we wanna keep that
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(middlewares),
+});
