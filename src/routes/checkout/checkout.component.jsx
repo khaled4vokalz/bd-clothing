@@ -15,6 +15,7 @@ import {
   removeItemFromCart,
   clearItemFromCart,
 } from '../../store/cart/cart.action';
+import PaymentForm from '../../components/payment-form/payment-form.component';
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function Checkout() {
         );
       })}
       <Total>Total: ${cartItemTotal}</Total>
+      <PaymentForm />
     </CheckoutContainer>
   );
 }
